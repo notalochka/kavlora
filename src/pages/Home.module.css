@@ -366,122 +366,84 @@
   overflow: hidden;
 }
 
-.sustainabilitySection {
+.awardsSection {
   background: #fff;
-  padding: 50px 0;
+  padding: 44px 20px 46px;
 }
 
-.sustainabilityMedia {
-  position: relative;
-  min-height: 560px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 48px 200px;
-}
-
-.sustainabilityMedia::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(20, 17, 12, 0.22);
-  z-index: 1;
-}
-
-.sustainabilityVideo {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.sustainabilityCard {
-  position: relative;
-  z-index: 2;
-  width: min(100%, 470px);
-  background: rgba(255, 255, 255, 0.95);
-  color: #1e1e1e;
-  padding: 36px 44px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
-}
-
-.sustainabilityKicker {
-  margin: 0;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.55);
-  text-align: center;
-}
-
-.sustainabilityTitle {
-  margin: 8px 0 16px;
-  font-size: 30px;
-  line-height: 1.05;
-  font-weight: 400;
-  color: #1f1f1f;
-  text-align: center;
-}
-
-.sustainabilityText {
-  margin: 0;
-  font-size: 15px;
-  line-height: 1.55;
-  color: rgba(0, 0, 0, 0.62);
-}
-
-.contactCtaSection {
-  background: #fff;
-  padding: 50px 20px 90px 20px;
-}
-
-.contactCtaInner {
-  max-width: 640px;
+.awardsContainer {
+  max-width: 1152px;
   margin: 0 auto;
-  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 0.5fr;
+  align-items: center;
+  gap: 32px;
 }
 
-.contactCtaTitle {
+.awardsContent {
+  max-width: 430px;
+}
+
+.awardsKicker {
   margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.78);
+}
+
+.awardsTitle {
+  margin: 22px 0 24px;
   font-size: 35px;
-  line-height: 1.08;
-  font-weight: 400;
+  line-height: 0.95;
+  font-weight: 700;
   color: #1f1f1f;
 }
 
-.contactCtaText {
-  margin: 20px auto 26px;
-  max-width: 620px;
-  font-size: 16px;
-  line-height: 1.6;
-  color: rgba(0, 0, 0, 0.56);
-}
-
-.contactCtaLink {
+.awardsReadMore {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-size: 18px;
-  line-height: 1;
+  font-size: 16px;
   font-weight: 500;
+  line-height: 1;
   color: #1f1f1f;
   text-decoration: none;
   transition: opacity 160ms ease;
 }
 
-.contactCtaIcon {
-  width: 16px;
-  height: 16px;
-  fill: currentColor;
-  flex: 0 0 auto;
-}
-
-.contactCtaLink:hover {
+.awardsReadMore:hover {
   opacity: 0.7;
 }
+.awardsReadMore .contactCtaIcon {
+  width: 14px;
+  height: 14px;
+  align-self: end;
+}
+
+.awardsLogoText {
+  font-size: 16px;
+  line-height: 1.45;
+  color: rgba(0, 0, 0, 0.56);
+  text-align: right;
+}
+
+.awardsLogoWrap {
+  opacity: 0.36;
+}
+
+.awardsLogo {
+  width: auto;
+  height: 150px;
+}
+.awardsLogoWrap:hover {
+  opacity: 1;
+}
+
+
+
 
 .container {
   max-width: 1152px;
@@ -731,56 +693,49 @@
     aspect-ratio: 16 / 10;
   }
 
-  .sustainabilitySection {
-    padding: 50px 0;
+  .awardsSection {
+    padding: 28px 16px 32px;
   }
 
-  .sustainabilityMedia {
-    min-height: 420px;
-    justify-content: center;
-    padding: 30px 26px;
+  .awardsContainer {
+    grid-template-columns: 1fr;
+    gap: 22px;
   }
 
-  .sustainabilityCard {
-    width: 100%;
-    max-width: 560px;
-    padding: 22px 18px;
+  .awardsContent {
+    max-width: 100%;
   }
 
-  .sustainabilityKicker {
-    font-size: 10px;
+  .awardsKicker {
+    font-size: 12px;
+    letter-spacing: 0.08em;
   }
 
-  .sustainabilityTitle {
-    margin: 8px 0 12px;
-    font-size: 24px;
-    line-height: 1.04;
+  .awardsTitle {
+    margin: 12px 0 14px;
+    font-size: 30px;
+    line-height: 0.98;
   }
 
-  .sustainabilityText {
-    font-size: 13px;
-    line-height: 1.45;
-  }
-
-  .contactCtaSection {
-    padding: 52px 18px 56px;
-  }
-
-  .contactCtaInner {
-    max-width: 560px;
-  }
-
-  .contactCtaTitle {
-    font-size: 24px;
-  }
-
-  .contactCtaText {
-    margin: 14px auto 20px;
-    font-size: 13px;
-    line-height: 1.5;
-  }
-
-  .contactCtaLink {
+  .awardsReadMore {
     font-size: 16px;
+  }
+
+  .awardsReadMore .contactCtaIcon {
+    width: 12px;
+    height: 12px;
+  }
+  .awardsLogoText {
+    font-size: 14px;
+  }
+
+  .awardsLogoWrap {
+    justify-self: center;
+    opacity: 0.42;
+  }
+
+  .awardsLogo {
+    width: auto;
+    height: 100px;
   }
 }

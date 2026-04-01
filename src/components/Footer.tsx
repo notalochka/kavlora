@@ -17,18 +17,19 @@ export function Footer() {
           </div>
 
           <div className={styles.infoCol}>
-            <h3 className={styles.heading}>Офіс</h3>
+            <h3 className={styles.heading}>Виробництво</h3>
             <p className={styles.address}>
+            08730, Київська обл., 
+            <br />Обухівський район, 
+            <br />село Мала Вільшанка, 
+            <br />вул. Шевченка, 125
               
-              вул. Промислова, 18
-              <br />
-              м. Луцьк, 43020, Україна
             </p>
             <a className={styles.mail} href="mailto:kavlora@gmail.com">
             kavlora@gmail.com
             </a>
-            <a className={styles.phone} href="tel:+380632404221">
-            +380 63 240 42 21
+            <a className={styles.phone} href="tel:+380934762787">
+            +380934762787
             </a>
           </div>
 
