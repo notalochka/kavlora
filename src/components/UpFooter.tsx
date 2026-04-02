@@ -1,7 +1,28 @@
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import styles from "./UpFooter.module.css";
 
 export function UpFooter() {
+  const [isContactCtaInView, setIsContactCtaInView] = useState(false);
+  const contactCtaRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const section = contactCtaRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setIsContactCtaInView(true);
+        observer.unobserve(entry.target);
+      },
+      { threshold: 0.3, rootMargin: "0px 0px -10% 0px" }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
     <section aria-label="Sustainability" className={styles.sustainabilitySection}>
@@ -25,7 +46,11 @@ export function UpFooter() {
         </div>
       </div>
     </section>
-    <section aria-label="Book an appointment" className={styles.contactCtaSection}>
+    <section
+      ref={contactCtaRef}
+      aria-label="Book an appointment"
+      className={`${styles.contactCtaSection} ${isContactCtaInView ? styles.contactCtaSectionInView : ""}`}
+    >
       <div className={styles.contactCtaInner}>
         <h2 className={styles.contactCtaTitle}>Запис на консультацію</h2>
         <p className={styles.contactCtaText}>

@@ -70,6 +70,34 @@
   padding: 50px 20px 90px 20px;
 }
 
+.contactCtaTitle,
+.contactCtaText,
+.contactCtaLink {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 920ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 920ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contactCtaSectionInView .contactCtaTitle,
+.contactCtaSectionInView .contactCtaText,
+.contactCtaSectionInView .contactCtaLink {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.contactCtaSectionInView .contactCtaTitle {
+  transition-delay: 100ms;
+}
+
+.contactCtaSectionInView .contactCtaText {
+  transition-delay: 260ms;
+}
+
+.contactCtaSectionInView .contactCtaLink {
+  transition-delay: 400ms;
+}
+
 .contactCtaInner {
   max-width: 640px;
   margin: 0 auto;
@@ -167,5 +195,15 @@
 
   .contactCtaLink {
     font-size: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contactCtaTitle,
+  .contactCtaText,
+  .contactCtaLink {
+    transition: none;
+    opacity: 1;
+    transform: none;
   }
 }

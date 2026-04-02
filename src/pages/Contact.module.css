@@ -16,6 +16,28 @@
   gap: 46px;
 }
 
+.left,
+.form {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 1600ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contactSectionInView .left,
+.contactSectionInView .form {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.contactSectionInView .left {
+  transition-delay: 120ms;
+}
+
+.contactSectionInView .form {
+  transition-delay: 300ms;
+}
+
 .left {
   max-width: 530px;
 }
@@ -236,6 +258,12 @@
   filter: none;
 }
 
+@media (min-width: 1400px) {
+  .contactSection {
+    max-width: 1400px;
+  }
+}
+
 @media (min-width: 900px) {
   .contactSection {
     grid-template-columns: 1fr 1.05fr;
@@ -316,5 +344,14 @@
   .submit {
     font-size: 14px;
     padding: 12px 30px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .left,
+  .form {
+    transition: none;
+    opacity: 1;
+    transform: none;
   }
 }

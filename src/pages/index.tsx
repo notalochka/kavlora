@@ -1,12 +1,17 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import styles from "./Home.module.css";
 import { UpFooter } from "@/components/UpFooter";
 
 export default function Home() {
+  const STATS_FINAL = {
+    area: 10000,
+    workers: 50,
+    raw: 1000,
+  };
   const showcaseTabs = [
     {
       label: "Фіча 1 Дизайн без обмежень",
@@ -43,7 +48,165 @@ export default function Home() {
   ];
   const [activeShowcaseTab, setActiveShowcaseTab] = useState(0);
   const [isShowcaseDetailsOpen, setIsShowcaseDetailsOpen] = useState(false);
+  const [isProductInView, setIsProductInView] = useState(false);
+  const [isStatsInView, setIsStatsInView] = useState(false);
+  const [isStatsQuoteInView, setIsStatsQuoteInView] = useState(false);
+  const [isShowcaseInView, setIsShowcaseInView] = useState(false);
+  const [isAwardsInView, setIsAwardsInView] = useState(false);
+  const [statsProgress, setStatsProgress] = useState(0);
+  const productSectionRef = useRef<HTMLElement | null>(null);
+  const statsSectionRef = useRef<HTMLElement | null>(null);
+  const statsQuoteSectionRef = useRef<HTMLElement | null>(null);
+  const showcaseSectionRef = useRef<HTMLElement | null>(null);
+  const awardsSectionRef = useRef<HTMLElement | null>(null);
   const currentShowcaseItem = showcaseTabs[activeShowcaseTab];
+  const DIGITS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+  function renderRollingNumber(finalText: string) {
+    let numericIndex = 0;
+
+    return (
+      <span className={styles.statRollNumber}>
+        {finalText.split("").map((char, idx) => {
+          if (!/^\d$/.test(char)) {
+            return (
+              <span key={`sep-${idx}`} className={styles.statRollSeparator}>
+                {char}
+              </span>
+            );
+          }
+
+          const finalDigit = Number(char);
+          const turns = 2 + numericIndex;
+          const totalSteps = turns * 10 + finalDigit;
+          const currentStep = totalSteps * statsProgress;
+          numericIndex += 1;
+
+          return (
+            <span key={`d-${idx}`} className={styles.statRollDigitWindow}>
+              <span
+                className={styles.statRollDigitStrip}
+                style={{ transform: `translateY(-${currentStep}em)` }}
+              >
+                {Array.from({ length: turns + 1 }, (_, turn) =>
+                  DIGITS.map((digit) => (
+                    <span key={`${idx}-${turn}-${digit}`} className={styles.statRollDigit}>
+                      {digit}
+                    </span>
+                  ))
+                )}
+              </span>
+            </span>
+          );
+        })}
+      </span>
+    );
+  }
+
+  useEffect(() => {
+    const section = productSectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setIsProductInView(true);
+        observer.unobserve(entry.target);
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const section = statsSectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setIsStatsInView(true);
+        observer.unobserve(entry.target);
+      },
+      { threshold: 0.35, rootMargin: "0px 0px -10% 0px" }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isStatsInView) return;
+
+    let rafId = 0;
+    const duration = 2200;
+    const start = performance.now();
+
+    const tick = (now: number) => {
+      const rawProgress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - rawProgress, 4);
+
+      setStatsProgress(eased);
+
+      if (rawProgress < 1) rafId = requestAnimationFrame(tick);
+    };
+
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
+  }, [isStatsInView]);
+
+  useEffect(() => {
+    const section = statsQuoteSectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setIsStatsQuoteInView(true);
+        observer.unobserve(entry.target);
+      },
+      { threshold: 0.25, rootMargin: "0px 0px -10% 0px" }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const section = showcaseSectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setIsShowcaseInView(true);
+        observer.unobserve(entry.target);
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const section = awardsSectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setIsAwardsInView(true);
+        observer.unobserve(entry.target);
+      },
+      { threshold: 0.25, rootMargin: "0px 0px -10% 0px" }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
@@ -95,7 +258,11 @@ export default function Home() {
             </div>
           </section>
 
-          <section aria-label="Про продукт" className={styles.productSection}>
+          <section
+            ref={productSectionRef}
+            aria-label="Про продукт"
+            className={`${styles.productSection} ${isProductInView ? styles.productSectionInView : ""}`}
+          >
             <div className={styles.container}>
               <div className={styles.productTop}>
                 <p className={styles.productKicker}>СТВОРЕНО ДЛЯ ВАС</p>
@@ -140,12 +307,14 @@ export default function Home() {
             </div>
           </section>
 
-          <section aria-label="Статистика" className={styles.statsSection}>
+          <section ref={statsSectionRef} aria-label="Статистика" className={styles.statsSection}>
             <div className={styles.statsContainer}>
               <div className={styles.statsRow}>
                 <div className={styles.statItem}>
                   <div className={styles.statTop}>
-                    <div className={styles.statNumber}>10 000 м²</div>
+                    <div className={styles.statNumber}>
+                      {renderRollingNumber(STATS_FINAL.area.toLocaleString("uk-UA"))} м²
+                    </div>
                     <div className={styles.statLabel}>
                       Загальної
                       <br />
@@ -158,7 +327,9 @@ export default function Home() {
 
                 <div className={styles.statItem}>
                   <div className={styles.statTop}>
-                    <div className={styles.statNumber}>50+</div>
+                    <div className={styles.statNumber}>
+                      {renderRollingNumber(String(STATS_FINAL.workers))}+
+                    </div>
                     <div className={styles.statLabel}>
                       Працівників
                       <br />
@@ -169,15 +340,21 @@ export default function Home() {
 
                 <div className={styles.statItem}>
                   <div className={styles.statTop}>
-                    <div className={styles.statNumber}>1000 м³</div>
+                    <div className={styles.statNumber}>
+                      {renderRollingNumber(STATS_FINAL.raw.toLocaleString("uk-UA"))} м³
+                    </div>
                     <div className={styles.statLabel}>Переробки <br />сировини <br />в місяць</div>
                   </div>
                 </div>
               </div>
             </div>
           </section>
-          <section aria-label="відгук" className={styles.statsQuoteSection}>
-            <div className={styles.statsQuoteContainer}>
+          <section ref={statsQuoteSectionRef} aria-label="відгук" className={styles.statsQuoteSection}>
+            <div
+              className={`${styles.statsQuoteContainer} ${
+                isStatsQuoteInView ? styles.statsQuoteContainerInView : ""
+              }`}
+            >
               <div className={styles.quote}>
                 <div className={styles.personCard}>
                   <div className={styles.personAvatar}>
@@ -203,7 +380,11 @@ export default function Home() {
             </div>
           </section>
 
-          <section aria-label="Wood system" className={styles.showcaseSection}>
+          <section
+            ref={showcaseSectionRef}
+            aria-label="Wood system"
+            className={`${styles.showcaseSection} ${isShowcaseInView ? styles.showcaseSectionInView : ""}`}
+          >
             <div className={styles.showcaseContainer}>
               <div className={styles.showcaseTop}>
                 <h2 className={styles.showcaseLead}>
@@ -275,7 +456,11 @@ export default function Home() {
             </div>
           </section>
 
-          <section aria-label="Awards and certificates" className={styles.awardsSection}>
+          <section
+            ref={awardsSectionRef}
+            aria-label="Awards and certificates"
+            className={`${styles.awardsSection} ${isAwardsInView ? styles.awardsSectionInView : ""}`}
+          >
             <div className={styles.awardsContainer}>
               <div className={styles.awardsContent}>
                 <p className={styles.awardsKicker}>СЕРТИФІКАЦІЯ</p>

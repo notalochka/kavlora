@@ -1,11 +1,137 @@
 import Head from "next/head";
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import { Header } from "@/components/Header";
 import { UpFooter } from "@/components/UpFooter";
 import { Footer } from "@/components/Footer";
 import styles from "./AboutUs.module.css";
 
 export default function AboutUsPage() {
+  const [isAboutIntroInView, setIsAboutIntroInView] = useState(false);
+  const [isImpactInView, setIsImpactInView] = useState(false);
+  const [isSolutionsInView, setIsSolutionsInView] = useState(false);
+  const [impactProgress, setImpactProgress] = useState(0);
+  const aboutIntroRef = useRef<HTMLElement | null>(null);
+  const impactSectionRef = useRef<HTMLElement | null>(null);
+  const solutionsSectionRef = useRef<HTMLElement | null>(null);
+  const DIGITS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+  function renderRollingNumber(finalText: string) {
+    let numericIndex = 0;
+
+    return (
+      <span className={styles.impactRollNumber}>
+        {finalText.split("").map((char, idx) => {
+          if (!/^\d$/.test(char)) {
+            return (
+              <span key={`sep-${idx}`} className={styles.impactRollSeparator}>
+                {char}
+              </span>
+            );
+          }
+
+          const finalDigit = Number(char);
+          const turns = 2 + numericIndex;
+          const totalSteps = turns * 10 + finalDigit;
+          const currentStep = totalSteps * impactProgress;
+          numericIndex += 1;
+
+          return (
+            <span key={`d-${idx}`} className={styles.impactRollDigitWindow}>
+              <span
+                className={styles.impactRollDigitStrip}
+                style={{ transform: `translateY(-${currentStep}em)` }}
+              >
+                {Array.from({ length: turns + 1 }, (_, turn) =>
+                  DIGITS.map((digit) => (
+                    <span key={`${idx}-${turn}-${digit}`} className={styles.impactRollDigit}>
+                      {digit}
+                    </span>
+                  ))
+                )}
+              </span>
+            </span>
+          );
+        })}
+      </span>
+    );
+  }
+
+  useEffect(() => {
+    const section = aboutIntroRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setIsAboutIntroInView(true);
+        observer.unobserve(entry.target);
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -8% 0px" }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const section = impactSectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setIsImpactInView(true);
+        observer.unobserve(entry.target);
+      },
+      { threshold: 0.25, rootMargin: "0px 0px -8% 0px" }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isImpactInView) return;
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) {
+      setImpactProgress(1);
+      return;
+    }
+
+    let rafId = 0;
+    const duration = 2200;
+    const start = performance.now();
+
+    const tick = (now: number) => {
+      const rawProgress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - rawProgress, 4);
+      setImpactProgress(eased);
+      if (rawProgress < 1) rafId = requestAnimationFrame(tick);
+    };
+
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
+  }, [isImpactInView]);
+
+  useEffect(() => {
+    const section = solutionsSectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setIsSolutionsInView(true);
+        observer.unobserve(entry.target);
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -8% 0px" }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
       <Head>
@@ -15,7 +141,11 @@ export default function AboutUsPage() {
 
       <Header forceDark />
       <main>
-        <section aria-label="About us intro" className={styles.aboutIntroSection}>
+        <section
+          ref={aboutIntroRef}
+          aria-label="About us intro"
+          className={`${styles.aboutIntroSection} ${isAboutIntroInView ? styles.aboutIntroSectionInView : ""}`}
+        >
           <div className={styles.aboutIntroGrid}>
             <div className={styles.aboutIntroTopText}>
               <p className={styles.aboutKicker}>МАЙСТЕРНІСТЬ, ПІДТВЕРДЖЕНА ЯКІСТЮ</p>
@@ -66,7 +196,7 @@ export default function AboutUsPage() {
           </div>
         </section>
 
-        <section aria-label="Impact in numbers" className={styles.impactSection}>
+        <section ref={impactSectionRef} aria-label="Impact in numbers" className={styles.impactSection}>
           <div className={styles.impactGrid}>
             <div className={styles.impactIntro}>
               <h2 className={styles.impactTitle}>Наш вплив у цифрах</h2>
@@ -77,38 +207,42 @@ export default function AboutUsPage() {
             </div>
 
             <div className={styles.impactMetric}>
-              <p className={styles.impactValue}>90%</p>
+              <p className={styles.impactValue}>{renderRollingNumber("90%")}</p>
               <p className={styles.impactLabel}>Повторні співпраці</p>
             </div>
 
             <div className={styles.impactMetric}>
-              <p className={styles.impactValue}>35+</p>
+              <p className={styles.impactValue}>{renderRollingNumber("35+")}</p>
               <p className={styles.impactLabel}>Проекти</p>
             </div>
 
             <div className={styles.impactMetric}>
-              <p className={styles.impactValue}>10</p>
+              <p className={styles.impactValue}>{renderRollingNumber("10")}</p>
               <p className={styles.impactLabel}>Роки на ринку</p>
             </div>
 
             <div className={styles.impactMetric}>
-              <p className={styles.impactValue}>650+</p>
+              <p className={styles.impactValue}>{renderRollingNumber("650+")}</p>
               <p className={styles.impactLabel}>Виготовлення ламелей </p>
             </div>
 
             <div className={styles.impactMetric}>
-              <p className={styles.impactValue}>500+</p>
+              <p className={styles.impactValue}>{renderRollingNumber("500+")}</p>
               <p className={styles.impactLabel}>Виготовлення</p>
             </div>
 
             <div className={styles.impactMetric}>
-              <p className={styles.impactValue}>450+</p>
+              <p className={styles.impactValue}>{renderRollingNumber("450+")}</p>
               <p className={styles.impactLabel}>Деталі оздоблення</p>
             </div>
           </div>
         </section>
 
-        <section aria-label="Building solutions" className={styles.solutionsSection}>
+        <section
+          ref={solutionsSectionRef}
+          aria-label="Building solutions"
+          className={`${styles.solutionsSection} ${isSolutionsInView ? styles.solutionsSectionInView : ""}`}
+        >
           <div className={styles.solutionsContainer}>
             <p className={styles.solutionsKicker}>НАШІ ВИРОБНИЧІ МОЖЛИВОСТІ</p>
             <h2 className={styles.solutionsTitle}>Дубові паркетні рішення для сучасних проєктів</h2>

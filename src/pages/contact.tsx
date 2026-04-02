@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import styles from "./Contact.module.css";
@@ -9,10 +9,29 @@ export default function ContactPage() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [agreed, setAgreed] = useState(false);
+  const [isContactInView, setIsContactInView] = useState(false);
+  const contactSectionRef = useRef<HTMLElement | null>(null);
 
   const canSubmit = useMemo(() => {
     return name.trim().length > 0 && email.trim().length > 0 && phone.trim().length > 0 && agreed;
   }, [agreed, email, name, phone]);
+
+  useEffect(() => {
+    const section = contactSectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setIsContactInView(true);
+        observer.unobserve(entry.target);
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -8% 0px" }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
@@ -25,7 +44,11 @@ export default function ContactPage() {
         <Header forceDark />
 
         <main className={styles.main}>
-          <section className={styles.contactSection} aria-label="Contact form">
+          <section
+            ref={contactSectionRef}
+            className={`${styles.contactSection} ${isContactInView ? styles.contactSectionInView : ""}`}
+            aria-label="Contact form"
+          >
             <div className={styles.left}>
             <p className={styles.kicker}>ЗАПИТ НА КОНСУЛЬТАЦІЮ</p>
             <h1 className={styles.title}>

@@ -328,3 +328,8 @@
   }
 }
 
+@media (min-width: 1400px) {
+  .inner {
+    max-width: 1400px;
+  }
+}

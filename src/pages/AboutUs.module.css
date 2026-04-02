@@ -3,6 +3,40 @@
   padding: 116px 20px 64px;
 }
 
+.aboutIntroTopText,
+.aboutImageTop,
+.aboutImageBottom,
+.aboutIntroBottomText {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1600ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.aboutIntroSectionInView .aboutIntroTopText,
+.aboutIntroSectionInView .aboutImageTop,
+.aboutIntroSectionInView .aboutImageBottom,
+.aboutIntroSectionInView .aboutIntroBottomText {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.aboutIntroSectionInView .aboutIntroTopText {
+  transition-delay: 100ms;
+}
+
+.aboutIntroSectionInView .aboutImageTop {
+  transition-delay: 260ms;
+}
+
+.aboutIntroSectionInView .aboutImageBottom {
+  transition-delay: 380ms;
+}
+
+.aboutIntroSectionInView .aboutIntroBottomText {
+  transition-delay: 520ms;
+}
+
 .aboutIntroGrid {
   max-width: 1152px;
   margin: 0 auto;
@@ -123,6 +157,39 @@
   font-weight: 600;
   color: #111;
   align-self: start;
+  display: inline-flex;
+  align-items: baseline;
+  white-space: nowrap;
+}
+
+.impactRollNumber {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1px;
+}
+
+.impactRollDigitWindow {
+  display: inline-block;
+  position: relative;
+  height: 1em;
+  overflow: hidden;
+  line-height: 1;
+}
+
+.impactRollDigitStrip {
+  display: block;
+  will-change: transform;
+}
+
+.impactRollDigit {
+  display: block;
+  height: 1em;
+  line-height: 1;
+}
+
+.impactRollSeparator {
+  display: inline-block;
+  min-width: 0.22em;
 }
 
 .impactLabel {
@@ -136,6 +203,42 @@
 .solutionsSection {
   background: #fff;
   padding: 28px 20px 70px;
+}
+
+.solutionsKicker,
+.solutionsTitle,
+.solutionCard {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1600ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.solutionsSectionInView .solutionsKicker,
+.solutionsSectionInView .solutionsTitle,
+.solutionsSectionInView .solutionCard {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.solutionsSectionInView .solutionsKicker {
+  transition-delay: 80ms;
+}
+
+.solutionsSectionInView .solutionsTitle {
+  transition-delay: 220ms;
+}
+
+.solutionsSectionInView .solutionCard:nth-of-type(1) {
+  transition-delay: 340ms;
+}
+
+.solutionsSectionInView .solutionCard:nth-of-type(2) {
+  transition-delay: 480ms;
+}
+
+.solutionsSectionInView .solutionCard:nth-of-type(3) {
+  transition-delay: 620ms;
 }
 
 .solutionsContainer {
@@ -185,7 +288,18 @@
   line-height: 1.45;
   color: rgba(0, 0, 0, 0.5);
 }
+@media (min-width: 1400px) {
+  .aboutIntroGrid {
+    max-width: 1400px;
+  }
+  .impactGrid {
+    max-width: 1400px;
+  }
 
+  .solutionsContainer {
+    max-width: 1400px;
+  }
+}
 @media (max-width: 768px) {
   .aboutIntroSection {
     padding: 92px 16px 34px;
@@ -276,5 +390,19 @@
   .solutionText {
     font-size: 14px;
     line-height: 1.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aboutIntroTopText,
+  .aboutImageTop,
+  .aboutImageBottom,
+  .aboutIntroBottomText,
+  .solutionsKicker,
+  .solutionsTitle,
+  .solutionCard {
+    transition: none;
+    opacity: 1;
+    transform: none;
   }
 }

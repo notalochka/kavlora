@@ -1,9 +1,35 @@
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import styles from "./Footer.module.css";
 
 export function Footer() {
+  const [isFooterInView, setIsFooterInView] = useState(false);
+  const footerRef = useRef<HTMLElement | null>(null);
+  const footerWord = "KAVLORA";
+
+  useEffect(() => {
+    const section = footerRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setIsFooterInView(true);
+        observer.unobserve(entry.target);
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <footer id="contact" className={styles.footer}>
+    <footer
+      ref={footerRef}
+      id="contact"
+      className={`${styles.footer} ${isFooterInView ? styles.footerInView : ""}`}
+    >
       <div className={styles.container}>
         <div className={styles.grid}>
           <div className={styles.brandCol}>
@@ -43,7 +69,15 @@ export function Footer() {
           </nav>
         </div>
         <div className={styles.footerWord} aria-hidden="true">
-          KAVLORA
+          {footerWord.split("").map((letter, index) => (
+            <span
+              key={`${letter}-${index}`}
+              className={styles.footerWordLetter}
+              style={{ ["--letter-index" as "--letter-index"]: index } as React.CSSProperties}
+            >
+              {letter}
+            </span>
+          ))}
         </div>
       </div>
     </footer>
