@@ -1,8 +1,8 @@
-import Head from "next/head";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import styles from "./Contact.module.css";
+import { Seo } from "@/components/Seo";
 
 export default function ContactPage() {
   const [name, setName] = useState("");
@@ -35,10 +35,11 @@ export default function ContactPage() {
 
   return (
     <>
-      <Head>
-        <title>Контакти | Kavlora</title>
-        <meta name="description" content="Сторінка контактів Kavlora" />
-      </Head>
+      <Seo
+        title="Контакти | Kavlora"
+        description="Зв'яжіться з командою Kavlora для консультації щодо дубових ламелей та заготовок для паркетної дошки."
+        path="/contact"
+      />
 
       <div className={styles.page}>
         <Header forceDark />

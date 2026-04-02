@@ -1,10 +1,10 @@
-import Head from "next/head";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Header } from "@/components/Header";
 import { UpFooter } from "@/components/UpFooter";
 import { Footer } from "@/components/Footer";
 import styles from "./AboutUs.module.css";
+import { Seo } from "@/components/Seo";
 
 export default function AboutUsPage() {
   const [isAboutIntroInView, setIsAboutIntroInView] = useState(false);
@@ -134,10 +134,11 @@ export default function AboutUsPage() {
 
   return (
     <>
-      <Head>
-        <title>Про нас | Kavlora</title>
-        <meta name="description" content="Про компанію Kavlora" />
-      </Head>
+      <Seo
+        title="Про нас | Kavlora"
+        description="Дізнайтесь більше про Kavlora: виробничі потужності, підхід до якості, FSC-сертифікацію та досвід у виробництві дубових ламелей."
+        path="/about-us"
+      />
 
       <Header forceDark />
       <main>

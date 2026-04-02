@@ -1,10 +1,10 @@
-import Head from "next/head";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import styles from "./Home.module.css";
 import { UpFooter } from "@/components/UpFooter";
+import { Seo } from "@/components/Seo";
 
 export default function Home() {
   const STATS_FINAL = {
@@ -210,10 +210,11 @@ export default function Home() {
 
   return (
     <>
-      <Head>
-        <title>Kavlora</title>
-        <meta name="description" content="Kavlora" />
-      </Head>
+      <Seo
+        title="Kavlora | Дубові ламелі та заготовки для паркету"
+        description="Kavlora виробляє дубові ламелі та заготовки для паркетної дошки за розмірами замовника з контролем якості на кожному етапі."
+        path="/"
+      />
 
       <div className={styles.page}>
         <Header />

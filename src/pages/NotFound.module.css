@@ -1,0 +1,53 @@
+.page {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: #f6f6f3;
+}
+
+.main {
+  display: grid;
+  place-items: center;
+  padding: 124px 20px 64px;
+}
+
+.card {
+  max-width: 680px;
+  text-align: center;
+}
+
+.code {
+  font-size: clamp(56px, 12vw, 112px);
+  line-height: 1;
+  font-weight: 700;
+  margin: 0;
+  color: #182014;
+}
+
+.title {
+  margin: 16px 0 0;
+  font-size: clamp(24px, 3.8vw, 40px);
+  color: #182014;
+}
+
+.description {
+  margin: 14px 0 0;
+  color: #3f4739;
+  font-size: 18px;
+}
+
+.actions {
+  margin-top: 30px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 999px;
+  background: #182014;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
