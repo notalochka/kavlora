@@ -6,6 +6,7 @@ import styles from "./Home.module.css";
 import { UpFooter } from "@/components/UpFooter";
 import { Seo } from "@/components/Seo";
 import { useI18n } from "@/hooks/useI18n";
+import { ContactModal } from "@/components/ContactModal";
 
 export default function Home() {
   const { dict, locale } = useI18n();
@@ -24,6 +25,7 @@ export default function Home() {
   const [isStatsQuoteInView, setIsStatsQuoteInView] = useState(false);
   const [isShowcaseInView, setIsShowcaseInView] = useState(false);
   const [isAwardsInView, setIsAwardsInView] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [statsProgress, setStatsProgress] = useState(0);
   const productSectionRef = useRef<HTMLElement | null>(null);
   const statsSectionRef = useRef<HTMLElement | null>(null);
@@ -212,9 +214,13 @@ export default function Home() {
                     <a href="#services" className={styles.btnPrimary}>
                       {t.heroServicesCta}
                     </a>
-                    <a href="/contact" className={styles.btnGhost}>
+                    <button
+                      type="button"
+                      className={styles.btnGhost}
+                      onClick={() => setIsContactModalOpen(true)}
+                    >
                       {t.heroContactCta}
-                    </a>
+                    </button>
                   </div>
                 </div>
 
@@ -452,6 +458,7 @@ export default function Home() {
           <UpFooter />
 
         </main>
+        <ContactModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
         <Footer />
       </div>
     </>

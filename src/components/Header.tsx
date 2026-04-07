@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { ContactModal } from "@/components/ContactModal";
 import styles from "./Header.module.css";
 
 type ServiceItem = { label: string; href: string };
@@ -23,6 +24,7 @@ type HeaderCopy = {
   advantages: string;
   about: string;
   contact: string;
+  contactCta: string;
   openMenu: string;
   closeMenu: string;
   mobileMenuAriaLabel: string;
@@ -40,6 +42,7 @@ const HEADER_COPY: Record<LocaleCode, HeaderCopy> = {
     advantages: "Переваги",
     about: "Про нас",
     contact: "Контакти",
+    contactCta: "Зв'язатися",
     openMenu: "Відкрити меню",
     closeMenu: "Закрити меню",
     mobileMenuAriaLabel: "Мобільне меню",
@@ -60,6 +63,7 @@ const HEADER_COPY: Record<LocaleCode, HeaderCopy> = {
     advantages: "Advantages",
     about: "About us",
     contact: "Contacts",
+    contactCta: "Contact us",
     openMenu: "Open menu",
     closeMenu: "Close menu",
     mobileMenuAriaLabel: "Mobile menu",
@@ -80,6 +84,7 @@ const HEADER_COPY: Record<LocaleCode, HeaderCopy> = {
     advantages: "优势",
     about: "关于我们",
     contact: "联系我们",
+    contactCta: "联系我们",
     openMenu: "打开菜单",
     closeMenu: "关闭菜单",
     mobileMenuAriaLabel: "移动端菜单",
@@ -107,13 +112,19 @@ export function Header({ services, forceDark = false }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [desktopLangOpen, setDesktopLangOpen] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const desktopLangRef = useRef<HTMLDivElement | null>(null);
   const servicesButtonId = useId();
   const servicesMenuId = useMemo(() => `${servicesButtonId}-menu`, [servicesButtonId]);
+  const desktopLangButtonId = useId();
+  const desktopLangMenuId = useMemo(() => `${desktopLangButtonId}-menu`, [desktopLangButtonId]);
   const currentLocale = resolveLocale(router.locale);
   const copy = HEADER_COPY[currentLocale];
   const menuServices = services ?? copy.serviceTypes;
+  const currentLanguage = LANGUAGES.find((language) => language.code === currentLocale) ?? LANGUAGES[0];
 
   function clearCloseTimer() {
     if (closeTimerRef.current) {
@@ -137,6 +148,7 @@ export function Header({ services, forceDark = false }: HeaderProps) {
       if (e.key === "Escape") {
         clearCloseTimer();
         setServicesOpen(false);
+        setDesktopLangOpen(false);
         setMobileOpen(false);
       }
     }
@@ -156,6 +168,17 @@ export function Header({ services, forceDark = false }: HeaderProps) {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    function onPointerDown(event: MouseEvent) {
+      if (!desktopLangRef.current?.contains(event.target as Node)) {
+        setDesktopLangOpen(false);
+      }
+    }
+
+    window.addEventListener("mousedown", onPointerDown);
+    return () => window.removeEventListener("mousedown", onPointerDown);
   }, []);
 
   return (
@@ -226,23 +249,58 @@ export function Header({ services, forceDark = false }: HeaderProps) {
             {copy.contact}
           </Link>
         </nav>
-        <div className={styles.langSwitcher} aria-label={copy.languageSwitcherLabel}>
-          {LANGUAGES.map((language) => (
-            <Link
-              key={language.code}
-              href={router.asPath}
-              locale={language.code}
-              scroll={false}
-              className={`${styles.langButton} ${
-                currentLocale === language.code ? styles.langButtonActive : ""
-              }`}
-              aria-label={`${copy.switchLanguagePrefix} ${language.label}`}
+        <div className={styles.headerCtaActions}>
+          <div className={styles.langSwitcher} aria-label={copy.languageSwitcherLabel}>
+            <div
+              ref={desktopLangRef}
+              className={`${styles.langDropdown} ${desktopLangOpen ? styles.langDropdownOpen : ""}`}
             >
-              {language.shortLabel}
-            </Link>
-          ))}
+              <button
+                id={desktopLangButtonId}
+                type="button"
+                className={styles.langDropdownTrigger}
+                aria-label={copy.languageSwitcherLabel}
+                aria-haspopup="menu"
+                aria-expanded={desktopLangOpen}
+                aria-controls={desktopLangMenuId}
+                onClick={() => setDesktopLangOpen((prev) => !prev)}
+              >
+                <span>{currentLanguage.shortLabel}</span>
+                <span className={styles.langDropdownChevron} aria-hidden="true" />
+              </button>
+              <div id={desktopLangMenuId} role="menu" className={styles.langDropdownMenu}>
+                {LANGUAGES.map((language) => (
+                  <button
+                    key={language.code}
+                    type="button"
+                    role="menuitemradio"
+                    aria-checked={currentLocale === language.code}
+                    className={`${styles.langDropdownItem} ${
+                      currentLocale === language.code ? styles.langDropdownItemActive : ""
+                    }`}
+                    onClick={() => {
+                      setDesktopLangOpen(false);
+                      if (currentLocale === language.code) return;
+                      void router.push(router.asPath, router.asPath, {
+                        locale: language.code,
+                        scroll: false,
+                      });
+                    }}
+                  >
+                    {language.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+          <button
+            type="button"
+            className={styles.headerCta}
+            onClick={() => setIsContactModalOpen(true)}
+          >
+            {copy.contactCta}
+          </button>
         </div>
-
         <button
           type="button"
           className={styles.mobileToggle}
@@ -355,6 +413,17 @@ export function Header({ services, forceDark = false }: HeaderProps) {
               >
                 {copy.contact}
               </Link>
+              <button
+                type="button"
+                className={styles.mobileModalCta}
+                onClick={() => {
+                  setMobileOpen(false);
+                  setMobileServicesOpen(false);
+                  setIsContactModalOpen(true);
+                }}
+              >
+                {copy.contactCta}
+              </button>
               <div className={styles.mobileLangSwitcher} aria-label={copy.languageSwitcherLabel}>
                 {LANGUAGES.map((language) => (
                   <Link
@@ -379,6 +448,7 @@ export function Header({ services, forceDark = false }: HeaderProps) {
           </div>
         </div>
       ) : null}
+      <ContactModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
     </header>
   );
 }

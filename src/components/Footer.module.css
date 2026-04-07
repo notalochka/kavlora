@@ -60,6 +60,36 @@
   color: rgba(255, 255, 255, 0.72);
 }
 
+.footerCta {
+  margin-top: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  min-height: 42px;
+  padding: 0 18px;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease;
+}
+
+.footerCta:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.footerCta:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.45);
+}
+
 .infoCol,
 .linksCol {
   display: flex;
@@ -160,6 +190,12 @@
     font-size: 15px;
   }
 
+  .footerCta {
+    margin-top: 18px;
+    min-height: 40px;
+    font-size: 14px;
+  }
+
   .heading {
     font-size: 22px;
   }
@@ -197,6 +233,11 @@
 
   .brandCol {
     max-width: 100%;
+  }
+
+  .footerCta {
+    width: 100%;
+    justify-content: center;
   }
 
   .heading {

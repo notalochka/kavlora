@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { resolveLocale } from "@/i18n/dictionaries";
 
 const SESSION_LOCALE_KEY = "kavlora.locale";
+const SESSION_LOCALE_RESTORED_KEY = "kavlora.locale-restored";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -12,24 +13,32 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     if (!router.isReady || hasRestoredSessionLocale.current) return;
-    hasRestoredSessionLocale.current = true;
 
     try {
-      const savedLocale = sessionStorage.getItem(SESSION_LOCALE_KEY);
-      if (!savedLocale) return;
-
-      const nextLocale = resolveLocale(savedLocale);
-      const currentLocale = resolveLocale(router.locale);
-
-      if (nextLocale !== currentLocale) {
-        void router.replace(router.asPath, router.asPath, {
-          locale: nextLocale,
-          scroll: false,
-        });
+      if (sessionStorage.getItem(SESSION_LOCALE_RESTORED_KEY) === "1") {
+        hasRestoredSessionLocale.current = true;
+        return;
       }
+
+      const savedLocale = sessionStorage.getItem(SESSION_LOCALE_KEY);
+      if (savedLocale) {
+        const nextLocale = resolveLocale(savedLocale);
+        const currentLocale = resolveLocale(router.locale);
+
+        if (nextLocale !== currentLocale) {
+          void router.replace(router.asPath, router.asPath, {
+            locale: nextLocale,
+            scroll: false,
+          });
+        }
+      }
+
+      sessionStorage.setItem(SESSION_LOCALE_RESTORED_KEY, "1");
     } catch {
       // Ignore storage access issues in strict browser environments.
     }
+
+    hasRestoredSessionLocale.current = true;
   }, [router.isReady, router.locale, router.asPath, router]);
 
   useEffect(() => {

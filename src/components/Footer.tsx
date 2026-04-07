@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { ContactModal } from "@/components/ContactModal";
 import { useI18n } from "@/hooks/useI18n";
 import styles from "./Footer.module.css";
 
@@ -8,6 +9,7 @@ export function Footer() {
   const { dict } = useI18n();
   const t = dict.footer;
   const [isFooterInView, setIsFooterInView] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const footerRef = useRef<HTMLElement | null>(null);
   const footerWord = "KAVLORA";
 
@@ -41,6 +43,13 @@ export function Footer() {
               <Image src="/logo1.png" alt="Kavlora" width={210} height={52} />
             </Link>
             <p className={styles.description}>{t.brandDescription}</p>
+            <button
+              type="button"
+              className={styles.footerCta}
+              onClick={() => setIsContactModalOpen(true)}
+            >
+              {t.contactCta}
+            </button>
           </div>
 
           <div className={styles.infoCol}>
@@ -83,6 +92,7 @@ export function Footer() {
           ))}
         </div>
       </div>
+      <ContactModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
     </footer>
   );
 }

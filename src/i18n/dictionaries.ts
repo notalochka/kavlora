@@ -106,8 +106,17 @@ export type AppDictionary = {
     agreementLabel: string;
     submit: string;
   };
+  notFound: {
+    seoTitle: string;
+    seoDescription: string;
+    ariaLabel: string;
+    title: string;
+    description: string;
+    backHome: string;
+  };
   footer: {
     brandDescription: string;
+    contactCta: string;
     productionHeading: string;
     menuHeading: string;
     navAriaLabel: string;
@@ -327,9 +336,18 @@ export const DICTIONARIES: Record<LocaleCode, AppDictionary> = {
       agreementLabel: "Я погоджуюся з тим, що мої введені дані збираються та зберігаються.",
       submit: "Відправити",
     },
+    notFound: {
+      seoTitle: "Сторінку не знайдено | Kavlora",
+      seoDescription: "Сторінку не знайдено. Поверніться на головну сторінку Kavlora.",
+      ariaLabel: "Сторінку не знайдено",
+      title: "Сторінку не знайдено",
+      description: "Схоже ви заблукали. Поверніться на головну сторінку Kavlora.",
+      backHome: "На головну",
+    },
     footer: {
       brandDescription:
         "KAVLORA виготовляє преміальні дубові ламелі та заготовки для паркету, що природно інтегруються в інтер'єр, з чіткою комунікацією від першого запиту до фінальної поставки.",
+      contactCta: "Зв'язатися з нами",
       productionHeading: "Виробництво",
       menuHeading: "Меню",
       navAriaLabel: "Навігація футера",
@@ -542,9 +560,18 @@ export const DICTIONARIES: Record<LocaleCode, AppDictionary> = {
       agreementLabel: "I agree that my entered data can be collected and stored.",
       submit: "Submit",
     },
+    notFound: {
+      seoTitle: "Page not found | Kavlora",
+      seoDescription: "Page not found. Return to the Kavlora home page.",
+      ariaLabel: "Page not found",
+      title: "Page not found",
+      description: "Looks like you got lost. Return to the Kavlora home page.",
+      backHome: "Back to home",
+    },
     footer: {
       brandDescription:
         "KAVLORA manufactures premium oak lamellas and parquet blanks that naturally integrate into interiors, with clear communication from first request to final delivery.",
+      contactCta: "Contact us",
       productionHeading: "Production",
       menuHeading: "Menu",
       navAriaLabel: "Footer navigation",
@@ -742,8 +769,17 @@ export const DICTIONARIES: Record<LocaleCode, AppDictionary> = {
       agreementLabel: "我同意所填写的数据被收集与存储。",
       submit: "提交",
     },
+    notFound: {
+      seoTitle: "页面未找到 | Kavlora",
+      seoDescription: "页面未找到。请返回 Kavlora 首页。",
+      ariaLabel: "页面未找到",
+      title: "页面未找到",
+      description: "看起来您迷路了。请返回 Kavlora 首页。",
+      backHome: "返回首页",
+    },
     footer: {
       brandDescription: "KAVLORA 生产高品质橡木贴片与地板坯料，流程沟通清晰，从需求到交付全程可控。",
+      contactCta: "联系我们",
       productionHeading: "生产基地",
       menuHeading: "菜单",
       navAriaLabel: "页脚导航",

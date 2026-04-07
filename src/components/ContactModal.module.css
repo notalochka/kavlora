@@ -1,0 +1,189 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.58);
+  backdrop-filter: blur(4px);
+}
+
+.modal {
+  position: relative;
+  width: min(100%, 820px);
+  max-height: min(88vh, 900px);
+  overflow-y: auto;
+  border-radius: 16px;
+  background: #fff;
+  padding: 28px 24px 24px;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.35);
+}
+
+.close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.close span {
+  position: absolute;
+  left: 8px;
+  top: 16px;
+  width: 18px;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.close span:first-child {
+  transform: rotate(45deg);
+}
+
+.close span:last-child {
+  transform: rotate(-45deg);
+}
+
+.kicker {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.56);
+}
+
+.lead {
+  margin: 0 0 18px;
+  max-width: 68ch;
+  font-size: 16px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.72);
+}
+
+.form {
+  display: grid;
+  gap: 14px;
+}
+
+.gridTwo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.field span {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.75);
+  font-weight: 500;
+}
+
+.field em {
+  font-style: normal;
+  color: #d34d4d;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 15px;
+  line-height: 1.4;
+  background: #fff;
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: #d7a683;
+  box-shadow: 0 0 0 3px rgba(215, 166, 131, 0.18);
+}
+
+.interest {
+  margin: 0;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 12px;
+  padding: 10px 12px 12px;
+  display: grid;
+  gap: 6px;
+}
+
+.interest legend {
+  padding: 0 6px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.68);
+  font-weight: 500;
+}
+
+.interest label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.82);
+}
+
+.agree {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.submit {
+  margin-top: 4px;
+  height: 44px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--brand-accent);
+  color: #000;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 150ms ease, opacity 150ms ease;
+}
+
+.submit:hover {
+  filter: brightness(0.96);
+}
+
+.submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .overlay {
+    padding: 12px;
+  }
+
+  .modal {
+    width: 100%;
+    max-height: 90vh;
+    border-radius: 12px;
+    padding: 22px 14px 14px;
+  }
+
+  .gridTwo {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
