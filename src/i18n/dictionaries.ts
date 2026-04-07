@@ -245,7 +245,7 @@ export const DICTIONARIES: Record<LocaleCode, AppDictionary> = {
           text: "Заготовки проходять калібрування та підготовку до профілювання, точного розкрою, формування паза/гребеня та шліфування.",
         },
         {
-          src: "/technology/6.jpg",
+          src: "/technology/6.png",
           title: "Масштаб і відповідальність",
           text: "Виробничий комплекс понад 10 000 м2, команда понад 50 фахівців і переробка більш як 1000 м3 сировини щомісяця.",
         },
@@ -461,7 +461,7 @@ export const DICTIONARIES: Record<LocaleCode, AppDictionary> = {
           text: "Blanks are calibrated and prepared for profiling, precise cutting, tongue-and-groove shaping, and sanding.",
         },
         {
-          src: "/technology/6.jpg",
+          src: "/technology/6.png",
           title: "Scale and responsibility",
           text: "Production area over 10,000 m2, team of 50+ specialists, and over 1000 m3 processed monthly.",
         },
@@ -667,7 +667,7 @@ export const DICTIONARIES: Record<LocaleCode, AppDictionary> = {
           text: "坯料经过校准并可用于开槽、开榫、精切与打磨等后续工序。",
         },
         {
-          src: "/technology/6.jpg",
+          src: "/technology/6.png",
           title: "规模与责任",
           text: "生产基地超过 10,000 平方米，50+ 专业人员，每月加工原料超 1000 立方米。",
         },
