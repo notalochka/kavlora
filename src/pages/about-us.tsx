@@ -5,8 +5,11 @@ import { UpFooter } from "@/components/UpFooter";
 import { Footer } from "@/components/Footer";
 import styles from "./AboutUs.module.css";
 import { Seo } from "@/components/Seo";
+import { useI18n } from "@/hooks/useI18n";
 
 export default function AboutUsPage() {
+  const { dict } = useI18n();
+  const t = dict.about;
   const [isAboutIntroInView, setIsAboutIntroInView] = useState(false);
   const [isImpactInView, setIsImpactInView] = useState(false);
   const [isSolutionsInView, setIsSolutionsInView] = useState(false);
@@ -135,8 +138,8 @@ export default function AboutUsPage() {
   return (
     <>
       <Seo
-        title="Про нас | Kavlora"
-        description="Дізнайтесь більше про Kavlora: виробничі потужності, підхід до якості, FSC-сертифікацію та досвід у виробництві дубових ламелей."
+        title={t.seoTitle}
+        description={t.seoDescription}
         path="/about-us"
       />
 
@@ -144,26 +147,22 @@ export default function AboutUsPage() {
       <main>
         <section
           ref={aboutIntroRef}
-          aria-label="About us intro"
+          aria-label={t.introAriaLabel}
           className={`${styles.aboutIntroSection} ${isAboutIntroInView ? styles.aboutIntroSectionInView : ""}`}
         >
           <div className={styles.aboutIntroGrid}>
             <div className={styles.aboutIntroTopText}>
-              <p className={styles.aboutKicker}>МАЙСТЕРНІСТЬ, ПІДТВЕРДЖЕНА ЯКІСТЮ</p>
-              <h1 className={styles.aboutTitle}>Від сировини до готових рішень для вашого будинку</h1>
+              <p className={styles.aboutKicker}>{t.aboutKicker}</p>
+              <h1 className={styles.aboutTitle}>{t.aboutTitle}</h1>
               <p className={styles.aboutLead}>
-              Ми працюємо з дубом щодня, перетворюючи натуральну сировину
-               на якісні ламелі та заготовки для паркетної дошки 
-               за параметрами замовника. Компанія займається виготовленням 
-               дубових ламелей товщиною від 2 мм , з класами якості A,B,C,D 
-               та заготовками для паркетної дошки згідно розмірів замовника. 
+                {t.aboutLead}
               </p>
             </div>
 
             <figure className={styles.aboutImageTop}>
               <Image
                 src="/about1.jpeg"
-                alt="Architectural drawing process"
+                alt={t.topImageAlt}
                 fill
                 className={styles.aboutImage}
                 sizes="(max-width: 768px) 100vw, 45vw"
@@ -173,7 +172,7 @@ export default function AboutUsPage() {
             <figure className={styles.aboutImageBottom}>
               <Image
                 src="/about2.JPG"
-                alt="Door hardware detail"
+                alt={t.bottomImageAlt}
                 fill
                 className={styles.aboutImage}
                 sizes="(max-width: 768px) 100vw, 45vw"
@@ -181,45 +180,33 @@ export default function AboutUsPage() {
             </figure>
 
             <div className={styles.aboutIntroBottomText}>
-              <p>
-              Виробнича інфраструктура охоплює комплекс приміщень загальною площею понад 10 000 м², 
-              що дозволяє ефективно організовувати всі етапи обробки. За участі команди з більш 
-              ніж 50 спеціалістів ми забезпечуємо щомісячну переробку сировини обсягом понад 1000 м³ 
-              і стабільну якість постачання.
-              </p>
-              <p>
-              Ми поєднуємо практичний досвід деревообробки з постійним розвитком технологій, 
-              щоб відповідати зростаючим вимогам ринку. Важливим підтвердженням нашого підходу є 
-              FSC-сертифікація (Forest Stewardship Council®), що засвідчує відповідальне 
-              походження деревини та дотримання екологічних і соціальних стандартів.
-              </p>
+              <p>{t.aboutBottomText1}</p>
+              <p>{t.aboutBottomText2}</p>
             </div>
           </div>
         </section>
 
-        <section ref={impactSectionRef} aria-label="Impact in numbers" className={styles.impactSection}>
+        <section ref={impactSectionRef} aria-label={t.impactAriaLabel} className={styles.impactSection}>
           <div className={styles.impactGrid}>
             <div className={styles.impactIntro}>
-              <h2 className={styles.impactTitle}>Наш досвід і можливості</h2>
-              <p className={styles.impactLead}>
-              Поєднуємо перевірений часом досвід, стабільне виробництво та міжнародну логістику для надійної співпраці.
-              </p>
+              <h2 className={styles.impactTitle}>{t.impactTitle}</h2>
+              <p className={styles.impactLead}>{t.impactLead}</p>
             </div>
 
             <div className={styles.impactMetric}>
               <p className={styles.impactValue}>{renderRollingNumber("15+")}</p>
-              <p className={styles.impactLabel}>років на ринку</p>
+              <p className={styles.impactLabel}>{t.impactYearsLabel}</p>
             </div>
 
             <div className={styles.impactMetric}>
               <Image
                 src="/air_shipping.gif"
-                alt="Air shipping"
+                alt={t.impactShippingAlt}
                 width={140}
                 height={92}
                 className={styles.impactGif}
               />
-              <p className={styles.impactLabel}>Доставка по всьому світу</p>
+              <p className={styles.impactLabel}>{t.impactShippingLabel}</p>
             </div>
 
           </div>
@@ -227,33 +214,18 @@ export default function AboutUsPage() {
 
         <section
           ref={solutionsSectionRef}
-          aria-label="Building solutions"
+          aria-label={t.solutionsAriaLabel}
           className={`${styles.solutionsSection} ${isSolutionsInView ? styles.solutionsSectionInView : ""}`}
         >
           <div className={styles.solutionsContainer}>
-            <p className={styles.solutionsKicker}>НАШІ ВИРОБНИЧІ МОЖЛИВОСТІ</p>
-            <h2 className={styles.solutionsTitle}>Дубові паркетні рішення для сучасних проєктів</h2>
-            
-            <div className={styles.solutionCard}>
-              <h3 className={styles.solutionHeading}>Виготовлення дубових ламелей</h3>
-              <p className={styles.solutionText}>
-              Виробляємо дубові ламелі товщиною від 2 мм із стабільною геометрією та контрольованою якістю, забезпечуючи надійну основу для подальшої обробки.
-              </p>
-            </div>
-            <div className={styles.solutionCard}>
-              <h3 className={styles.solutionHeading}>Природна основа якості</h3>
-              <p className={styles.solutionText}>
-              Працюємо з дубом, зберігаючи баланс між природною 
-              естетикою деревини та технологічною точністю виробничих процесів.
-              </p>
-            </div>
-
-            <div className={styles.solutionCard}>
-              <h3 className={styles.solutionHeading}>Індивідуальний підхід до замовлення</h3>
-              <p className={styles.solutionText}>
-              Виготовляємо ламелі та заготовки для паркетної дошки під конкретні параметри клієнта, гарантуючи прогнозований результат і стабільні поставки.
-              </p>
-            </div>
+            <p className={styles.solutionsKicker}>{t.solutionsKicker}</p>
+            <h2 className={styles.solutionsTitle}>{t.solutionsTitle}</h2>
+            {t.solutionsCards.map((card) => (
+              <div key={card.title} className={styles.solutionCard}>
+                <h3 className={styles.solutionHeading}>{card.title}</h3>
+                <p className={styles.solutionText}>{card.text}</p>
+              </div>
+            ))}
           </div>
         </section>
       </main>

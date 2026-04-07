@@ -1,8 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { useI18n } from "@/hooks/useI18n";
 import styles from "./Footer.module.css";
 
 export function Footer() {
+  const { dict } = useI18n();
+  const t = dict.footer;
   const [isFooterInView, setIsFooterInView] = useState(false);
   const footerRef = useRef<HTMLElement | null>(null);
   const footerWord = "KAVLORA";
@@ -33,23 +37,22 @@ export function Footer() {
       <div className={styles.container}>
         <div className={styles.grid}>
           <div className={styles.brandCol}>
-            <a href="/" aria-label="Kavlora" className={styles.logoLink}>
+            <Link href="/" aria-label="Kavlora" className={styles.logoLink}>
               <Image src="/logo1.png" alt="Kavlora" width={210} height={52} />
-            </a>
-            <p className={styles.description}>
-              KAVLORA виготовляє преміальні дубові ламелі та заготовки для паркету, що природно
-              інтегруються в інтерʼєр, з чіткою комунікацією від першого запиту до фінальної поставки.
-            </p>
+            </Link>
+            <p className={styles.description}>{t.brandDescription}</p>
           </div>
 
           <div className={styles.infoCol}>
-            <h3 className={styles.heading}>Виробництво</h3>
+            <h3 className={styles.heading}>{t.productionHeading}</h3>
             <p className={styles.address}>
-            08730, Київська обл., 
-            <br />Обухівський район, 
-            <br />село Мала Вільшанка, 
-            <br />вул. Шевченка, 125
-              
+              {t.addressLines[0]}
+              <br />
+              {t.addressLines[1]}
+              <br />
+              {t.addressLines[2]}
+              <br />
+              {t.addressLines[3]}
             </p>
             <a className={styles.mail} href="mailto:kavlora@gmail.com">
             kavlora@gmail.com
@@ -59,13 +62,13 @@ export function Footer() {
             </a>
           </div>
 
-          <nav className={styles.linksCol} aria-label="Footer navigation">
-            <h3 className={styles.heading}>Меню</h3>
-            <a href="#">Головна</a>
-            <a href="#services">Послуги</a>
-            <a href="/advantages">Переваги</a>
-            <a href="/about-us">Про нас</a>
-            <a href="/contact">Контакти</a>
+          <nav className={styles.linksCol} aria-label={t.navAriaLabel}>
+            <h3 className={styles.heading}>{t.menuHeading}</h3>
+            <Link href="/">{t.home}</Link>
+            <Link href="/#services">{t.services}</Link>
+            <Link href="/advantages">{t.advantages}</Link>
+            <Link href="/about-us">{t.about}</Link>
+            <Link href="/contact">{t.contact}</Link>
           </nav>
         </div>
         <div className={styles.footerWord} aria-hidden="true">

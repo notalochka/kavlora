@@ -1,9 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   reactCompiler: true,
   reactStrictMode: true,
+  i18n: {
+    locales: ["uk", "en", "zh-CN"],
+    defaultLocale: "uk",
+    localeDetection: true,
+  },
 };
 
 export default nextConfig;

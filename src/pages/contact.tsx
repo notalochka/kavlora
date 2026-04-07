@@ -3,8 +3,11 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import styles from "./Contact.module.css";
 import { Seo } from "@/components/Seo";
+import { useI18n } from "@/hooks/useI18n";
 
 export default function ContactPage() {
+  const { dict } = useI18n();
+  const t = dict.contact;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -36,8 +39,8 @@ export default function ContactPage() {
   return (
     <>
       <Seo
-        title="Контакти | Kavlora"
-        description="Зв'яжіться з командою Kavlora для консультації щодо дубових ламелей та заготовок для паркетної дошки."
+        title={t.seoTitle}
+        description={t.seoDescription}
         path="/contact"
       />
 
@@ -48,14 +51,13 @@ export default function ContactPage() {
           <section
             ref={contactSectionRef}
             className={`${styles.contactSection} ${isContactInView ? styles.contactSectionInView : ""}`}
-            aria-label="Contact form"
+            aria-label={t.formAriaLabel}
           >
             <div className={styles.left}>
-            <p className={styles.kicker}>ЗАПИТ НА КОНСУЛЬТАЦІЮ</p>
+            <p className={styles.kicker}>{t.kicker}</p>
             
             <p className={styles.lead}>
-              Залиште коротку інформацію про ваш запит — і команда Kavlora проконсультує, 
-              щоб ви отримали матеріал під ваші точні розміри та потреби
+              {t.lead}
             </p>
 
               <ul className={styles.contactList}>
@@ -79,12 +81,12 @@ export default function ContactPage() {
               <div className={styles.gridTwo}>
                 <label className={styles.field}>
                   <span>
-                    Імʼя <em>*</em>
+                    {t.nameLabel} <em>*</em>
                   </span>
                   <input
                     type="text"
                     name="name"
-                    placeholder="Введіть ваше імʼя"
+                    placeholder={t.namePlaceholder}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
@@ -93,12 +95,12 @@ export default function ContactPage() {
 
                 <label className={styles.field}>
                   <span>
-                    Email <em>*</em>
+                    {t.emailLabel} <em>*</em>
                   </span>
                   <input
                     type="email"
                     name="email"
-                    placeholder="Введіть ваш email"
+                    placeholder={t.emailPlaceholder}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -108,12 +110,12 @@ export default function ContactPage() {
 
               <label className={styles.field}>
                 <span>
-                  Номер телефону <em>*</em>
+                  {t.phoneLabel} <em>*</em>
                 </span>
                 <input
                   type="tel"
                   name="phone"
-                  placeholder="Введіть ваш номер телефону"
+                  placeholder={t.phonePlaceholder}
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   required
@@ -121,30 +123,30 @@ export default function ContactPage() {
               </label>
 
               <fieldset className={styles.interest}>
-                <legend>Що вас цікавить? (необовʼязково)</legend>
+                <legend>{t.interestsLegend}</legend>
                 <label>
-                  <input type="checkbox" name="interest" value="lamels" /> Ламелі
+                  <input type="checkbox" name="interest" value="lamels" /> {t.interestLamels}
                 </label>
                 <label>
-                  <input type="checkbox" name="interest" value="cuttings" /> Заготовки для паркетної дошки
+                  <input type="checkbox" name="interest" value="cuttings" /> {t.interestCuttings}
                 </label>
                 <label>
-                  <input type="checkbox" name="interest" value="other" /> Інше
+                  <input type="checkbox" name="interest" value="other" /> {t.interestOther}
                 </label>
               </fieldset>
 
               <label className={styles.field}>
-                <span>Детальніше про ваш запит</span>
-                <textarea name="message" rows={6} placeholder="Напишіть детальніше про ваш запит" />
+                <span>{t.detailsLabel}</span>
+                <textarea name="message" rows={6} placeholder={t.detailsPlaceholder} />
               </label>
 
               <label className={styles.agree}>
                 <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} required />
-                <span>Я погоджуюся з тим, що мої введені дані збираються та зберігаються.</span>
+                <span>{t.agreementLabel}</span>
               </label>
 
               <button type="submit" className={styles.submit} disabled={!canSubmit}>
-                Відправити
+                {t.submit}
               </button>
             </form>
           </section>

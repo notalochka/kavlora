@@ -5,8 +5,11 @@ import { UpFooter } from "@/components/UpFooter";
 import { Footer } from "@/components/Footer";
 import { Seo } from "@/components/Seo";
 import styles from "./Advantages.module.css";
+import { useI18n } from "@/hooks/useI18n";
 
 export default function AdvantagesPage() {
+  const { dict } = useI18n();
+  const t = dict.advantages;
   const videoTrackRef = useRef<HTMLDivElement | null>(null);
   const descriptionSectionRef = useRef<HTMLElement | null>(null);
   const cardsSectionRef = useRef<HTMLElement | null>(null);
@@ -105,15 +108,15 @@ export default function AdvantagesPage() {
   return (
     <div className={styles.page}>
       <Seo
-        title="Переваги | Kavlora"
-        description="Переваги співпраці з Kavlora: якість, стабільність та виробничий супровід."
+        title={t.seoTitle}
+        description={t.seoDescription}
         path="/advantages"
       />
 
       <Header />
 
       <main>
-        <section aria-label="Переваги" className={styles.heroSection}>
+        <section aria-label={t.heroAriaLabel} className={styles.heroSection}>
           <video
             className={styles.heroVideo}
             src="/woodvideo_techno.mp4"
@@ -124,63 +127,26 @@ export default function AdvantagesPage() {
           />
           <div className={styles.heroOverlay} />
           <div className={styles.heroInner}>
-            <p className={styles.heroKicker}>ПЕРЕВАГИ</p>
-            <h1 className={styles.heroTitle}>Технологічність, якій довіряють</h1>
+            <p className={styles.heroKicker}>{t.heroKicker}</p>
+            <h1 className={styles.heroTitle}>{t.heroTitle}</h1>
           </div>
         </section>
 
         <section
           ref={descriptionSectionRef}
-          aria-label="Advantages description"
+          aria-label={t.descriptionAriaLabel}
           className={`${styles.descriptionSection} ${isDescriptionInView ? styles.descriptionSectionInView : ""}`}
         >
-        <p className={styles.descriptionText}>
-          <strong>Kavlora</strong> створює дерев’яні рішення, у яких природна естетика дуба поєднується
-          з сучасним виробничим підходом. Ми працюємо над ламелями та заготовками для паркетної дошки,
-          зберігаючи високі стандарти якості й індивідуальний підхід до кожного запиту. Наша команда
-          забезпечує стабільність процесів і прогнозований результат, а FSC-сертифікація підкреслює
-          відповідальне ставлення до походження сировини та принципів сталого виробництва.
-        </p>
+          <p className={styles.descriptionText}>{t.descriptionText}</p>
         </section>
 
         <section
           ref={cardsSectionRef}
-          aria-label="Advantages cards"
+          aria-label={t.cardsAriaLabel}
           className={`${styles.cardsSection} ${isCardsInView ? styles.cardsSectionInView : ""}`}
         >
           <div className={styles.cardsGrid}>
-            {[
-              {
-                src: "/technology/1.png",
-                title: "Цільноламельна дубова ламель",
-                text: "Виготовляємо цільноламельну дубову ламель у форматі напівфабрикату: товщина 2-6 мм, ширина 50-300 мм, довжина до 3000 мм. Саме цільна структура забезпечує преміальний вигляд і стабільну поведінку матеріалу.",
-              },
-              {
-                src: "/technology/2.jpg",
-                title: "Сфери застосування",
-                text: "Наша ламель використовується для меблів, паркету та підлоги, сходів, дверей, стільниць, щитів і клеєних виробів. Матеріал адаптований під різні задачі та вимоги до фінального продукту.",
-              },
-              {
-                src: "/technology/3.png",
-                title: "Сортування та вологість",
-                text: "Працюємо з класами якості від A до D/F: від селекційної деревини до матеріалу з допустимими природними особливостями. На заводі встановлено 8 сушильних камер для доведення вологості до заданих параметрів.",
-              },
-              {
-                src: "/technology/4.jpg",
-                title: "Заготовки для паркету",
-                text: "Другий ключовий напрям — заготовка під масивний паркет: це підготовлений дубовий напівфабрикат із правильною породою, базовими розмірами та стабільною вологістю для подальшої доробки.",
-              },
-              {
-                src: "/technology/5.png",
-                title: "Основа для точної доробки",
-                text: "Заготовки проходять етапи калібрування та підготовки до профілювання, точного розкрою, формування паза/гребеня, шліфування й фінішних операцій. Це створює надійну базу для якісної паркетної планки.",
-              },
-              {
-                src: "/technology/6.jpg",
-                title: "Масштаб і відповідальність",
-                text: "Виробничий комплекс понад 10 000 м², команда понад 50 фахівців і переробка більш як 1000 м³ сировини щомісяця. FSC-сертифікація підтверджує законне, відповідальне та стале походження деревини.",
-              },
-            ].map((card) => (
+            {t.cards.map((card) => (
               <article key={card.title} className={styles.card}>
                 <figure className={styles.cardImageWrap}>
                   <Image src={card.src} alt={card.title} fill className={styles.cardImage} sizes="(max-width: 768px) 100vw, 33vw" />
@@ -194,20 +160,14 @@ export default function AdvantagesPage() {
 
         <section
           ref={awardsIntroSectionRef}
-          aria-label="Prizes and awards"
+          aria-label={t.awardsIntroAriaLabel}
           className={`${styles.awardsIntroSection} ${isAwardsIntroInView ? styles.awardsIntroSectionInView : ""}`}
         >
           <div className={styles.awardsIntroInner}>
             <div className={styles.awardsIntroContent}>
-              <p className={styles.awardsIntroKicker}>СЕРТИФІКАЦІЯ</p>
-              <h2 className={styles.awardsIntroTitle}>Підтверджена відповідальність</h2>
-              <p className={styles.awardsIntroText}>
-                Для <strong>Kavlora</strong> якість продукції та відповідальне походження сировини є базовими
-                принципами роботи. <strong>FSC-сертифікація (Forest Stewardship Council®)</strong> підтверджує, що деревина
-                походить із лісів, де ведеться стале, законне та бережливе господарство з дотриманням
-                екологічних і соціальних стандартів. Для наших партнерів це гарантія прозорого ланцюга
-                постачання, стабільної якості та екологічно виваженого вибору.
-              </p>
+              <p className={styles.awardsIntroKicker}>{t.awardsKicker}</p>
+              <h2 className={styles.awardsIntroTitle}>{t.awardsTitle}</h2>
+              <p className={styles.awardsIntroText}>{t.awardsText}</p>
             </div>
             <Image
               src="/FSC_logo.svg"
@@ -221,35 +181,31 @@ export default function AdvantagesPage() {
 
         <section
           ref={precisionSectionRef}
-          aria-label="Відеогалерея"
+          aria-label={t.precisionAriaLabel}
           className={`${styles.precisionSection} ${isPrecisionInView ? styles.precisionSectionInView : ""}`}
         >
           <div className={styles.precisionInner}>
-            <p className={styles.precisionKicker}>ВІДЕОГАЛЕРЕЯ</p>
-            <h2 className={styles.precisionTitle}>Детальніше про виробництво</h2>
-            <p className={styles.precisionText}>
-              Якщо ви хочете дізнатися більше про нашу продукцію, етапи обробки дуба та виробничі
-              можливості, перегляньте відео в галереї нижче. У відеоматеріалах показано приклади продукції,
-              якість виконання та підхід <strong>Kavlora</strong> до кожного етапу виробництва.
-            </p>
+            <p className={styles.precisionKicker}>{t.precisionKicker}</p>
+            <h2 className={styles.precisionTitle}>{t.precisionTitle}</h2>
+            <p className={styles.precisionText}>{t.precisionText}</p>
           </div>
         </section>
 
         <section
           ref={videoGallerySectionRef}
-          aria-label="Video gallery"
+          aria-label={t.videoGalleryAriaLabel}
           className={`${styles.videoGallerySection} ${isVideoGalleryInView ? styles.videoGallerySectionInView : ""}`}
         >
           <div className={styles.videoGalleryInner}>
             <div className={styles.videoHeader}>
-              <h2 className={styles.videoGalleryTitle}>Відеогалерея</h2>
+              <h2 className={styles.videoGalleryTitle}>{t.videoGalleryTitle}</h2>
               <div className={styles.videoNav}>
                 <button
                   type="button"
                   className={styles.videoNavBtn}
                   onClick={() => scrollVideos("left")}
                   disabled={!canScrollLeft}
-                  aria-label="Попередні відео"
+                  aria-label={t.prevVideosLabel}
                 >
                   <svg
                     aria-hidden="true"
@@ -265,7 +221,7 @@ export default function AdvantagesPage() {
                   className={styles.videoNavBtn}
                   onClick={() => scrollVideos("right")}
                   disabled={!canScrollRight}
-                  aria-label="Наступні відео"
+                  aria-label={t.nextVideosLabel}
                 >
                   <svg
                     aria-hidden="true"
@@ -288,7 +244,7 @@ export default function AdvantagesPage() {
                       controls
                       playsInline
                       preload="metadata"
-                      aria-label={`Відео ${index + 1}`}
+                      aria-label={`${t.videoLabel} ${index + 1}`}
                     />
                   </figure>
                 )

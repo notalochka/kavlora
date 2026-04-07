@@ -5,47 +5,18 @@ import { Footer } from "@/components/Footer";
 import styles from "./Home.module.css";
 import { UpFooter } from "@/components/UpFooter";
 import { Seo } from "@/components/Seo";
+import { useI18n } from "@/hooks/useI18n";
 
 export default function Home() {
+  const { dict, locale } = useI18n();
+  const t = dict.home;
+  const numberLocale = locale === "uk" ? "uk-UA" : locale === "en" ? "en-US" : "zh-CN";
   const STATS_FINAL = {
     area: 10000,
     workers: 50,
     raw: 1000,
   };
-  const showcaseTabs = [
-    {
-      label: "Фіча 1 Дизайн без обмежень",
-      headline: "From the start among the best: we perfect the Pivot system",
-      imageSrc: "/main/photo4.png",
-      imageAlt: "Pivot system detail",
-      details:
-        "Текст1 The pivot door system unlocks true design freedom, supporting finishes from around the world including heavy, statement materials. With hinges engineered to carry door leaves up to 500 kg, architects and designers can realize bold concepts without sacrificing comfort or performance. The result is a powerful architectural feature that turns the entrance into a showcase, enabling experimentation with proportions, form, and material with no compromise.",
-    },
-    {
-      label: "Фіча 2 Дизайн без обмежень",
-      headline: "Відтворення вашої ідеї з урахуванням всіх деталей",
-      imageSrc: "/main/photo5.png",
-      imageAlt: "Design concept sketch",
-      details:
-        "Текст2 The pivot door system unlocks true design freedom, supporting finishes from around the world including heavy, statement materials. With hinges engineered to carry door leaves up to 500 kg, architects and designers can realize bold concepts without sacrificing comfort or performance. The result is a powerful architectural feature that turns the entrance into a showcase, enabling experimentation with proportions, form, and material with no compromise.",
-    },
-    {
-      label: "Фіча 3 Дизайн без обмежень",
-      headline: "Tailored details that turn ideas into signature solutions",
-      imageSrc: "/main/photo6.png",
-      imageAlt: "Tailored production detail",
-      details:
-        "Текст3 The pivot door system unlocks true design freedom, supporting finishes from around the world including heavy, statement materials. With hinges engineered to carry door leaves up to 500 kg, architects and designers can realize bold concepts without sacrificing comfort or performance. The result is a powerful architectural feature that turns the entrance into a showcase, enabling experimentation with proportions, form, and material with no compromise.",
-    },
-    {
-      label: "Фіча 4 Дизайн без обмежень",
-      headline: "Engineered security and performance for everyday reliability",
-      imageSrc: "/main/photo7.png",
-      imageAlt: "Security and performance detail",
-      details:
-        "Текст4 The pivot door system unlocks true design freedom, supporting finishes from around the world including heavy, statement materials. With hinges engineered to carry door leaves up to 500 kg, architects and designers can realize bold concepts without sacrificing comfort or performance. The result is a powerful architectural feature that turns the entrance into a showcase, enabling experimentation with proportions, form, and material with no compromise.",
-    },
-  ];
+  const showcaseTabs = t.showcaseTabs;
   const [activeShowcaseTab, setActiveShowcaseTab] = useState(0);
   const [isShowcaseDetailsOpen, setIsShowcaseDetailsOpen] = useState(false);
   const [isProductInView, setIsProductInView] = useState(false);
@@ -211,18 +182,18 @@ export default function Home() {
   return (
     <>
       <Seo
-        title="Kavlora | Дубові ламелі та заготовки для паркету"
-        description="Kavlora виробляє дубові ламелі та заготовки для паркетної дошки за розмірами замовника з контролем якості на кожному етапі."
+        title={t.seoTitle}
+        description={t.seoDescription}
         path="/"
       />
 
       <div className={styles.page}>
         <Header />
         <main>
-          <section aria-label="Головний банер" className={styles.hero}>
+          <section aria-label={t.heroAriaLabel} className={styles.hero}>
             <Image
               src="/main_banner.jpg"
-              alt="Банер"
+              alt={t.heroImageAlt}
               fill
               priority
               className={styles.coverImage}
@@ -234,27 +205,22 @@ export default function Home() {
             <div className={styles.heroInner}>
               <div className={styles.heroGrid}>
                 <div>
-                  <p className={styles.heroKicker}>
-                    ДУБОВІ ЛАМЕЛІ ТА ЗАГОТОВКИ ДЛЯ ПАРКЕТУ
-                  </p>
-                  <h1 className={styles.heroTitle}>Дуб, який видно. Якість, яку відчувають.</h1>
+                  <p className={styles.heroKicker}>{t.heroKicker}</p>
+                  <h1 className={styles.heroTitle}>{t.heroTitle}</h1>
 
                   <div className={styles.heroActions}>
                     <a href="#services" className={styles.btnPrimary}>
-                      Послуги
+                      {t.heroServicesCta}
                     </a>
                     <a href="/contact" className={styles.btnGhost}>
-                      Записатись
+                      {t.heroContactCta}
                     </a>
                   </div>
                 </div>
 
                 <div className={styles.heroDescWrap}>
                   <div className={styles.heroDescCols}>
-                    <p className={styles.heroDesc}>
-                      Ламелі від 2 мм, класи A/B/C/D. Заготовки для паркетної дошки за розмірами
-                      вашого замовлення.
-                    </p>
+                    <p className={styles.heroDesc}>{t.heroDescription}</p>
                     <Image
                       src="/FSC_logo_white.svg"
                       alt="FSC logo"
@@ -270,24 +236,20 @@ export default function Home() {
 
           <section
             ref={productSectionRef}
-            aria-label="Про продукт"
+            aria-label={t.productAriaLabel}
             className={`${styles.productSection} ${isProductInView ? styles.productSectionInView : ""}`}
           >
             <div className={styles.container}>
               <div className={styles.productTop}>
-                <p className={styles.productKicker}>СТВОРЕНО ДЛЯ ВАС</p>
-
-                <p className={styles.productLead}>
-                Компанія KAVLORA спеціалізується на виробництві дубових ламелей та заготовки для паркетної дошки.
-                Від відбору сировини до фінальної геометрії – кожна деталь під контролем якості.
-                </p>
+                <p className={styles.productKicker}>{t.productKicker}</p>
+                <p className={styles.productLead}>{t.productLead}</p>
               </div>
 
               <div className={styles.staggerGrid}>
                 <figure className={styles.staggerPhoto}>
                   <Image
                     src="/main/photo1.jpeg"
-                    alt="Інтер'єр з дверима"
+                    alt={t.productImageAlts[0]}
                     fill
                     className={styles.coverImage}
                     sizes="(max-width: 768px) 100vw, 33vw"
@@ -297,7 +259,7 @@ export default function Home() {
                 <figure className={`${styles.staggerPhoto} ${styles.photoMid}`}>
                   <Image
                     src="/main/photo2.png"
-                    alt="Вхідна група"
+                    alt={t.productImageAlts[1]}
                     fill
                     className={styles.coverImage}
                     sizes="(max-width: 768px) 100vw, 34vw"
@@ -307,7 +269,7 @@ export default function Home() {
                 <figure className={`${styles.staggerPhoto} ${styles.photoLow}`}>
                   <Image
                     src="/main/photo3.png"
-                    alt="Дизайнерський інтер'єр"
+                    alt={t.productImageAlts[2]}
                     fill
                     className={styles.coverImage}
                     sizes="(max-width: 768px) 100vw, 33vw"
@@ -317,21 +279,15 @@ export default function Home() {
             </div>
           </section>
 
-          <section ref={statsSectionRef} aria-label="Статистика" className={styles.statsSection}>
+          <section ref={statsSectionRef} aria-label={t.statsAriaLabel} className={styles.statsSection}>
             <div className={styles.statsContainer}>
               <div className={styles.statsRow}>
                 <div className={styles.statItem}>
                   <div className={styles.statTop}>
                     <div className={styles.statNumber}>
-                      {renderRollingNumber(STATS_FINAL.area.toLocaleString("uk-UA"))} м²
+                      {renderRollingNumber(STATS_FINAL.area.toLocaleString(numberLocale))} м²
                     </div>
-                    <div className={styles.statLabel}>
-                      Загальної
-                      <br />
-                      площі
-                      <br />
-                      приміщень
-                    </div>
+                    <div className={styles.statLabel}>{t.statsAreaLabel}</div>
                   </div>
                 </div>
 
@@ -340,26 +296,22 @@ export default function Home() {
                     <div className={styles.statNumber}>
                       {renderRollingNumber(String(STATS_FINAL.workers))}+
                     </div>
-                    <div className={styles.statLabel}>
-                      Працівників
-                      <br />
-                      компанії
-                    </div>
+                    <div className={styles.statLabel}>{t.statsWorkersLabel}</div>
                   </div>
                 </div>
 
                 <div className={styles.statItem}>
                   <div className={styles.statTop}>
                     <div className={styles.statNumber}>
-                      {renderRollingNumber(STATS_FINAL.raw.toLocaleString("uk-UA"))} м³
+                      {renderRollingNumber(STATS_FINAL.raw.toLocaleString(numberLocale))} м³
                     </div>
-                    <div className={styles.statLabel}>Переробки <br />сировини <br />в місяць</div>
+                    <div className={styles.statLabel}>{t.statsRawLabel}</div>
                   </div>
                 </div>
               </div>
             </div>
           </section>
-          <section ref={statsQuoteSectionRef} aria-label="відгук" className={styles.statsQuoteSection}>
+          <section ref={statsQuoteSectionRef} aria-label={t.statsQuoteAriaLabel} className={styles.statsQuoteSection}>
             <div
               className={`${styles.statsQuoteContainer} ${
                 isStatsQuoteInView ? styles.statsQuoteContainerInView : ""
@@ -383,31 +335,21 @@ export default function Home() {
                   />
                 </div>
 
-                <p className={styles.quoteText}>
-                  У Kavlora ми виготовляємо дубові ламелі товщиною від 2 мм у класах якості A, B, C, D та
-                  заготовки для паркетної дошки за індивідуальними розмірами замовника. Для нас важливі
-                  прозора комунікація, точна геометрія та стабільна якість у кожній партії. Наша мета
-                  проста: дати вам надійний матеріал, з яким зручно працювати і який гарантує довговічний
-                  результат від виробництва.
-                </p>
+                <p className={styles.quoteText}>{t.statsQuoteText}</p>
               </div>
             </div>
           </section>
 
           <section
             ref={showcaseSectionRef}
-            aria-label="Wood system"
+            aria-label={t.showcaseAriaLabel}
             className={`${styles.showcaseSection} ${isShowcaseInView ? styles.showcaseSectionInView : ""}`}
           >
             <div className={styles.showcaseContainer}>
               <div className={styles.showcaseTop}>
-                <h2 className={styles.showcaseLead}>
-                 Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                 Aperiam sit consequatur nostrum a nam, beatae ducimus enim optio 
-                 explicabo minus optio explicabo.
-                </h2>
-                <a href="/contact" className={styles.showcaseReadMore}>
-                  Детальніше
+                <h2 className={styles.showcaseLead}>{t.showcaseLead}</h2>
+                <a href="/advantages" className={styles.showcaseReadMore}>
+                  {t.showcaseReadMore}
                   <svg
                     aria-hidden="true"
                     className={styles.contactCtaIcon}
@@ -443,6 +385,7 @@ export default function Home() {
                       className={styles.showcaseFeatureToggle}
                       aria-expanded={isShowcaseDetailsOpen}
                       aria-controls="showcase-feature-details"
+                      aria-label={isShowcaseDetailsOpen ? t.showcaseToggleClose : t.showcaseToggleOpen}
                       onClick={() => setIsShowcaseDetailsOpen((prev) => !prev)}
                     >
                       {isShowcaseDetailsOpen ? "-" : "+"}
@@ -472,15 +415,15 @@ export default function Home() {
 
           <section
             ref={awardsSectionRef}
-            aria-label="Awards and certificates"
+            aria-label={t.awardsAriaLabel}
             className={`${styles.awardsSection} ${isAwardsInView ? styles.awardsSectionInView : ""}`}
           >
             <div className={styles.awardsContainer}>
               <div className={styles.awardsContent}>
-                <p className={styles.awardsKicker}>СЕРТИФІКАЦІЯ</p>
-                <h2 className={styles.awardsTitle}>Forest Stewardship Council®</h2>
-                <a href="/contact" className={styles.awardsReadMore}>
-                  Read more
+                <p className={styles.awardsKicker}>{t.awardsKicker}</p>
+                <h2 className={styles.awardsTitle}>{t.awardsTitle}</h2>
+                <a href="/advantages" className={styles.awardsReadMore}>
+                  {t.awardsReadMore}
                   <svg
                     aria-hidden="true"
                     className={styles.contactCtaIcon}
@@ -492,7 +435,7 @@ export default function Home() {
                 </a>
               </div>
               <div className={styles.awardsLogoText}>
-                <p className={styles.awardsLogoText}>FSC-сертифікат — це міжнародний знак екологічної та соціальної відповідальності лісової продукції, що підтверджує її походження з лісів, де ведеться стале, законне та бережливе господарство. Він маркує деревину, меблі, папір та упаковку, гарантуючи екологічний вибір для споживача. </p>
+                <p className={styles.awardsLogoText}>{t.awardsDescription}</p>
               </div>
               <div className={styles.awardsLogoWrap}>
                 <Image
