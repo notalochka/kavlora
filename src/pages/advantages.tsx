@@ -196,6 +196,16 @@ export default function AdvantagesPage() {
           aria-label={t.videoGalleryAriaLabel}
           className={`${styles.videoGallerySection} ${isVideoGalleryInView ? styles.videoGallerySectionInView : ""}`}
         >
+          <div className={styles.videoGalleryIntro}>
+            <video
+              className={styles.videoGalleryIntroVideo}
+              src="/video.mp4"
+              controls
+              playsInline
+              preload="metadata"
+              aria-label={t.videoGalleryTitle}
+            />
+          </div>
           <div className={styles.videoGalleryInner}>
             <div className={styles.videoHeader}>
               <h2 className={styles.videoGalleryTitle}>{t.videoGalleryTitle}</h2>

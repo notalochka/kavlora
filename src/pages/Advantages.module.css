@@ -319,6 +319,25 @@
   padding: 10px 20px 84px;
 }
 
+.videoGalleryIntro {
+  max-width: 1152px;
+  margin: 0 auto 22px;
+  opacity: 0;
+  transform: translateY(34px);
+  transition: opacity 1600ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1600ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.videoGalleryIntroVideo {
+  width: 100%;
+  display: block;
+  border-radius: 18px;
+  background: #000;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+}
+
 .videoGalleryInner {
   max-width: 1152px;
   margin: 0 auto;
@@ -450,6 +469,12 @@
 .videoGallerySectionInView .videoCard {
   opacity: 1;
   transform: translateY(0);
+}
+
+.videoGallerySectionInView .videoGalleryIntro {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 60ms;
 }
 
 .videoGallerySectionInView .videoHeader {
